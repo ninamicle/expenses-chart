@@ -1,4 +1,18 @@
-<div class="col-4">
+<div class="chart__content">
+  <h3 class="chart__title">Spending - Last 7 days</h3>
   <canvas #myChart width="100px" height="100px"></canvas>
-  <h3 class="text-center mt-3">Line Chart</h3>
+  <hr />
+  <div class="chart__summary">
+    <div class="chart__total">
+      <p class="chart__text">Total this month</p>
+      <p class="chart__number chart__number--large">$478.33</p>
+    </div>
+    <div class="chart__percentage">
+      <p class="chart__number chart__number--little">+2.4%</p>
+      <p class="chart__text">from last month</p>
+    </div>
+  </div>
+</div>
+<div class="chart__loader" *ngIf="loading">
+  <span class="loader"></span>
 </div>

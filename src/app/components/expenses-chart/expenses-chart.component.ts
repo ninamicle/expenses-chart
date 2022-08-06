@@ -13,50 +13,85 @@ export class ExpensesChartComponent implements OnInit {
   myChart!: ElementRef<HTMLCanvasElement>;
   @Input() data: ChartData[] | null = null;
 
+  loading: boolean = true;
+
   constructor() {}
 
   ngOnInit(): void {
     setTimeout(() => {
       const ctx = this.myChart.nativeElement.getContext('2d');
-
+      this.loading = false;
       this.setupChart(ctx);
-      console.log(this.myChart.nativeElement);
-    }, 5000);
+    }, 2000);
   }
 
   setupChart(ctx: any) {
     const labels = this.data?.map((x) => x.day);
+    const amount = this.data?.map((x) => x.amount);
+    let x = 3;
+    const currentDay = this.data?.find((x) => x.currentDay);
+    console.log(currentDay);
     const data = {
       labels: labels,
       datasets: [
         {
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)',
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-          ],
+          data: amount,
+          legend: {
+            display: false,
+          },
+          backgroundColor: this.data?.map((x) =>
+            x.currentDay ? '#76B5BC' : '#EC775F'
+          ),
+          hoverBackgroundColor: this.data?.map((x) =>
+            x.currentDay ? 'rgba(118,181,188,0.6)' : 'rgba(236,119,95,0.6)'
+          ),
           borderWidth: 1,
+          borderRadius: 4,
         },
       ],
     };
     const chart = new Chart(ctx, {
       type: 'bar',
       data: data,
+      options: {
+        plugins: {
+          tooltip: {
+            displayColors: false,
+            callbacks: {
+              label: function (context) {
+                console.log(context);
+                let label = context.dataset.label || '';
+                if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(context.parsed.y);
+                }
+                return label;
+              },
+              title: function () {
+                return '';
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+            ticks: {
+              color: '#93867B',
+            },
+          },
+          y: {
+            display: false,
+            grid: {
+              display: false,
+            },
+          },
+        },
+      },
     });
   }
 }
