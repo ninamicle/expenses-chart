@@ -55,6 +55,9 @@ export class ExpensesChartComponent implements OnInit {
       data: data,
       options: {
         plugins: {
+          legend: {
+            display: false,
+          },
           tooltip: {
             displayColors: false,
             callbacks: {
