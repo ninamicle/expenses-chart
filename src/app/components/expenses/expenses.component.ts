@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as monthAmount from '../../../assets/db.json';
+import { ChartData } from 'src/app/models/chart-data.model';
+import data from '../../../assets/db.json';
 import { Balance } from '../../models/balance.model';
 
 @Component({
@@ -8,7 +9,8 @@ import { Balance } from '../../models/balance.model';
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-  totalAmount: Balance | null = monthAmount.balance;
+  balance: Balance | null = data.balance;
+  chartData: ChartData[] | null = data.chartData;
 
   constructor() {}
 

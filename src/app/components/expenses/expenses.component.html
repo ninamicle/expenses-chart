@@ -1,1 +1,14 @@
-<p>expenses works!</p>
+<div class="container">
+  <section class="balance">
+    <div class="balance__content">
+      <p class="balance__content-title">My balance</p>
+      <p class="balance__content-value">921.48$</p>
+    </div>
+    <div class="balance__img">
+      <img src="../../../assets/images/logo.svg" alt="Logo" />
+    </div>
+  </section>
+  <section class="chart">
+    <app-expenses-chart [data]="chartData"></app-expenses-chart>
+  </section>
+</div>
